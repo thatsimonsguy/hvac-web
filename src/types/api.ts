@@ -6,6 +6,7 @@ export interface Zone {
   setpoint: number
   mode: SystemMode
   current_temp: number
+  capabilities: string[]
 }
 
 export interface SystemStatus {

@@ -12,9 +12,10 @@ import { ErrorMessage } from './ErrorMessage'
 interface DashboardProps {
   onZoneClick: (zone: Zone, system: SystemStatus) => void
   onSystemClick: (system: SystemStatus) => void
+  refreshTrigger?: number // Optional prop to trigger refresh
 }
 
-export function Dashboard({ onZoneClick, onSystemClick }: DashboardProps) {
+export function Dashboard({ onZoneClick, onSystemClick, refreshTrigger }: DashboardProps) {
   const [zones, setZones] = useState<Zone[]>([])
   const [system, setSystem] = useState<SystemStatus | null>(null)
   const [loading, setLoading] = useState(true)
@@ -44,6 +45,13 @@ export function Dashboard({ onZoneClick, onSystemClick }: DashboardProps) {
     const interval = setInterval(fetchData, REFRESH_INTERVAL)
     return () => clearInterval(interval)
   }, [])
+
+  // Refresh data when refreshTrigger changes
+  useEffect(() => {
+    if (refreshTrigger) {
+      fetchData()
+    }
+  }, [refreshTrigger])
 
   if (loading) {
     return <LoadingSpinner />

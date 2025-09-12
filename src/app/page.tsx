@@ -12,6 +12,7 @@ export default function Home() {
   const [currentView, setCurrentView] = useState<View>('dashboard')
   const [selectedZone, setSelectedZone] = useState<Zone | null>(null)
   const [systemStatus, setSystemStatus] = useState<SystemStatus | null>(null)
+  const [refreshTrigger, setRefreshTrigger] = useState(0)
 
   const handleZoneClick = (zone: Zone, system: SystemStatus) => {
     setSelectedZone(zone)
@@ -28,16 +29,20 @@ export default function Home() {
     setCurrentView('dashboard')
     setSelectedZone(null)
     setSystemStatus(null)
+    // Refresh dashboard data when returning from a detail view
+    setRefreshTrigger(prev => prev + 1)
   }
 
   const handleZoneUpdate = (updatedZone: Zone) => {
     setSelectedZone(updatedZone)
-    // You might want to trigger a refresh of the dashboard data here
+    // Trigger dashboard refresh when data changes
+    setRefreshTrigger(prev => prev + 1)
   }
 
   const handleSystemUpdate = (updatedSystem: SystemStatus) => {
     setSystemStatus(updatedSystem)
-    // You might want to trigger a refresh of the dashboard data here
+    // Trigger dashboard refresh when data changes
+    setRefreshTrigger(prev => prev + 1)
   }
 
   return (
@@ -46,6 +51,7 @@ export default function Home() {
         <Dashboard 
           onZoneClick={handleZoneClick}
           onSystemClick={handleSystemClick}
+          refreshTrigger={refreshTrigger}
         />
       )}
 

@@ -20,15 +20,22 @@ export function ZoneDetail({ zone, systemStatus, onBack, onUpdate }: ZoneDetailP
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
 
-  // Determine available modes based on system mode
+  // Determine available modes based on system mode and zone capabilities
   const getAvailableModes = (): SystemMode[] => {
-    const baseModes: SystemMode[] = ['off', 'circulate']
+    const baseModes: SystemMode[] = ['off']
     
-    if (systemStatus.mode === 'heating') {
+    // Add circulate if zone has heating or cooling capability
+    if (zone.capabilities.includes('heating') || zone.capabilities.includes('cooling')) {
+      baseModes.push('circulate')
+    }
+    
+    // Add heating mode if system supports it and zone has heating capability
+    if (systemStatus.mode === 'heating' && zone.capabilities.includes('heating')) {
       baseModes.push('heating')
     }
     
-    if (systemStatus.mode === 'cooling') {
+    // Add cooling mode if system supports it and zone has cooling capability
+    if (systemStatus.mode === 'cooling' && zone.capabilities.includes('cooling')) {
       baseModes.push('cooling')
     }
     
