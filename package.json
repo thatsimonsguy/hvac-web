@@ -3,9 +3,9 @@
   "version": "1.0.0",
   "description": "Web frontend for HVAC controller",
   "scripts": {
-    "dev": "next dev -p 8081",
+    "dev": "next dev -p 8081 -H 0.0.0.0",
     "build": "next build",
-    "start": "next start -p 8081",
+    "start": "next start -p 8081 -H 0.0.0.0",
     "lint": "next lint"
   },
   "dependencies": {
