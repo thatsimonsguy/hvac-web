@@ -1,6 +1,5 @@
 import { Zone, SystemStatus, SetSystemModeRequest, SetZoneModeRequest, SetZoneSetpointRequest } from '@/types/api'
-
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8080'
+import { apiConfig } from '@/config/api'
 
 class ApiError extends Error {
   constructor(message: string, public status: number) {
@@ -10,7 +9,7 @@ class ApiError extends Error {
 }
 
 async function fetchApi<T>(endpoint: string, options?: RequestInit): Promise<T> {
-  const url = `${API_BASE_URL}${endpoint}`
+  const url = `${apiConfig.baseUrl}${endpoint}`
   
   try {
     const response = await fetch(url, {

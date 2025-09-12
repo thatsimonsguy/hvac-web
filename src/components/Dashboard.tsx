@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react'
 import { api } from '@/lib/api'
 import { Zone, SystemStatus } from '@/types/api'
+import { REFRESH_INTERVAL } from '@/config/api'
 import { SystemCard } from './SystemCard'
 import { ZoneCard } from './ZoneCard'
 import { LoadingSpinner } from './LoadingSpinner'
@@ -39,8 +40,8 @@ export function Dashboard({ onZoneClick, onSystemClick }: DashboardProps) {
   useEffect(() => {
     fetchData()
     
-    // Refresh data every 30 seconds
-    const interval = setInterval(fetchData, 30000)
+    // Refresh data at configured interval
+    const interval = setInterval(fetchData, REFRESH_INTERVAL)
     return () => clearInterval(interval)
   }, [])
 

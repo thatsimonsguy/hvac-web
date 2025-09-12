@@ -32,11 +32,17 @@ The web interface will be available at http://localhost:8081
 
 ### API Configuration
 
-The frontend connects to the HVAC controller API. Update the API URL in `.env.local`:
+**Default Configuration**: The API URL is configured in `src/config/api.ts` with a sensible default for typical Pi deployments.
 
-```
+**Override for Development**: For local development or custom deployments, copy `.env.example` to `.env.local` and customize:
+
+```bash
+cp .env.example .env.local
+# Edit .env.local to override API_URL if needed
 NEXT_PUBLIC_API_URL=http://localhost:8080
 ```
+
+**Network Deployment**: The default configuration assumes the HVAC controller is running at `http://192.168.1.48:8080`. Update `src/config/api.ts` for different network setups.
 
 ## Architecture
 
