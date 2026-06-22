@@ -28,7 +28,10 @@ async function fetchApi<T>(endpoint: string, options?: RequestInit): Promise<T> 
       )
     }
 
-    return await response.json()
+    // Mutation endpoints (PUT) reply with 200 and an empty body. Parsing an
+    // empty body as JSON throws, so only parse when there's actually content.
+    const text = await response.text()
+    return (text ? JSON.parse(text) : undefined) as T
   } catch (error) {
     if (error instanceof ApiError) {
       throw error
